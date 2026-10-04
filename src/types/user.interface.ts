@@ -1,0 +1,1 @@
+export type { IUser } from "../schemas/user.schema.ts";

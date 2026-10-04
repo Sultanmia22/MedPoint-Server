@@ -9,7 +9,18 @@
 * 🟢 You can import this file directly.
 */
 
+export const AuthProvider = {
+  credentials: 'credentials',
+  google: 'google'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const UserRole = {
+  patient: 'patient',
+  doctor: 'doctor',
+  admin: 'admin'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
