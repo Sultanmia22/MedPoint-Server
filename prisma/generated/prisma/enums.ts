@@ -9,14 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const AuthProvider = {
-  credentials: 'credentials',
-  google: 'google'
-} as const
-
-export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
-
-
 export const UserRole = {
   patient: 'patient',
   doctor: 'doctor',
@@ -24,3 +16,11 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const AuthProvider = {
+  credentials: 'credentials',
+  google: 'google'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
