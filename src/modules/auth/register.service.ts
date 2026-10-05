@@ -1,7 +1,7 @@
-import type { IUser } from "../types/user.interface.ts";
-import { prisma } from "../db.ts";
+import type { IUser } from "../../types/auth/auth.interface.ts";
+import { prisma } from "../../db.ts";
 import bcrypt from "bcryptjs";
-import { AppError } from "../../utils/AppError.ts";
+import { AppError } from "../../../utils/AppError.ts";
 
 export const registerUser = async (userData: IUser) => {
   const existingUser = await prisma.user.findUnique({
@@ -17,6 +17,7 @@ export const registerUser = async (userData: IUser) => {
 
   try {
     return await prisma.$transaction(async (transaction) => {
+      
       const newUser = await transaction.user.create({
         data: {
           name: userData.name,
@@ -61,3 +62,4 @@ export const registerUser = async (userData: IUser) => {
     throw error;
   }
 };
+

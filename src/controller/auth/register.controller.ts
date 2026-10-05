@@ -1,9 +1,9 @@
 import type { RequestHandler } from "express";
-import { userRegistrationSchema } from "../schemas/user.schema.ts";
+import { userRegistrationSchema } from "../../schemas/auth/registe.schema.ts";
 import {
   registerUser,
-} from "../modules/user.module.ts";
-import { AppError } from "../../utils/AppError.ts";
+} from "../../modules/auth/register.service.ts";
+import { AppError } from "../../../utils/AppError.ts";
 
 export const userRegister: RequestHandler = async (req, res, next) => {
   const validation = userRegistrationSchema.safeParse(req.body);
