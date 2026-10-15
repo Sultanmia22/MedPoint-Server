@@ -2,7 +2,7 @@ import type { RequestHandler } from "express";
 import { refreshTokenService } from "../../modules/auth/refresh.service.ts";
 import { AppError } from "../../../utils/AppError.ts";
 
-const refresh: RequestHandler = async (req, res) => {
+export const refresh: RequestHandler = async (req, res) => {
   const rawToken = req.cookies?.refreshToken;
 
   if (!rawToken) {

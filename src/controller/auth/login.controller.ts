@@ -5,19 +5,17 @@ import { loginUser } from "../../modules/auth/login.service.ts";
 import { loginSchema } from "../../schemas/auth/login.schema.ts";
 import { AppError } from "../../../utils/AppError.ts";
 
-
 export const userlogin: RequestHandler = async (req, res) => {
-
   const validation = loginSchema.safeParse(req.body);
 
-  if(!validation.success) {
+  if (!validation.success) {
     res.status(400).json({
       success: false,
-      errors: validation.error.issues.map(({path,message}) => ({
+      errors: validation.error.issues.map(({ path, message }) => ({
         field: path.join("."),
-        message
-      }))
-    })
+        message,
+      })),
+    });
     return;
   }
 
@@ -36,10 +34,17 @@ export const userlogin: RequestHandler = async (req, res) => {
       data: { accessToken: result.accessToken, user: result.user },
     });
   } catch (error) {
-    if(error instanceof AppError) {
-      res.status(error.statusCode).json({ success: false, message: error.message });
+    if (error instanceof AppError) {
+      res
+        .status(error.statusCode)
+        .json({ success: false, message: error.message });
     } else {
-      res.status(500).json({ success: false, message: "An unexpected error occurred. Please try again later." });
+      res
+        .status(500)
+        .json({
+          success: false,
+          message: "An unexpected error occurred. Please try again later.",
+        });
     }
   }
 };

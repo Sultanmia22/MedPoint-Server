@@ -50,6 +50,7 @@ export const loginUser = async (payload: LoginInput) => {
       userId: user.id,
       role: user.role,
     });
+    
     const { rawToken, tokenHash } = generateRefreshToken();
 
     const expiresAt = new Date();

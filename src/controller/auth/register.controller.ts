@@ -6,6 +6,7 @@ import {
 import { AppError } from "../../../utils/AppError.ts";
 
 export const userRegister: RequestHandler = async (req, res, next) => {
+  // console.log("Register Payload Data",req.body)
   const validation = userRegistrationSchema.safeParse(req.body);
 
   if (!validation.success) {

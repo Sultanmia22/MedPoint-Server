@@ -1,9 +1,16 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto"
+
+// Access Token
 export const generateAccessToken = (payload: { userId: string; role: string }) => {
     return jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, {
         expiresIn: "1hr",
     })
+}
+
+// Verify Access Token 
+const verifyAccessToken = (token: string) => {
+    return jwt.verify(token, process.env.JWT_ACCESS_SECRET as string);
 }
 
 // Reference Token 
