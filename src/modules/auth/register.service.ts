@@ -2,6 +2,7 @@ import type { IUser } from "../../types/auth/auth.interface.ts";
 import { prisma } from "../../db.ts";
 import bcrypt from "bcryptjs";
 import { AppError } from "../../../utils/AppError.ts";
+import { generateDisplayId } from "../../../utils/displayId.util.ts";
 
 export const registerUser = async (userData: IUser) => {
   const existingUser = await prisma.user.findUnique({
@@ -14,19 +15,21 @@ export const registerUser = async (userData: IUser) => {
   }
 
   const hashedPassword = await bcrypt.hash(userData.password, 10);
+  const displayId = await generateDisplayId()
 
   try {
     return await prisma.$transaction(async (transaction) => {
       
       const newUser = await transaction.user.create({
         data: {
+          displayId,
           name: userData.name,
           email: userData.email,
           phone: userData.phone,
           password: hashedPassword,
           role: userData.role,
         },
-        select: { id: true },
+        select: { id: true,displayId: true },
       });
 
       if (userData.role === "doctor") {
@@ -44,7 +47,7 @@ export const registerUser = async (userData: IUser) => {
         });
       }
 
-      return { userId: newUser.id };
+      return { userId: newUser.id,displayId: newUser.displayId };
     });
   } catch (error) {
     if (

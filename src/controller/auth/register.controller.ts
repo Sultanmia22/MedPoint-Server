@@ -4,6 +4,7 @@ import {
   registerUser,
 } from "../../modules/auth/register.service.ts";
 import { AppError } from "../../../utils/AppError.ts";
+import { success } from "zod";
 
 export const userRegister: RequestHandler = async (req, res, next) => {
   // console.log("Register Payload Data",req.body)
@@ -24,8 +25,12 @@ export const userRegister: RequestHandler = async (req, res, next) => {
     const result = await registerUser(validation.data);
 
     res.status(201).json({
+      success: true,
       message: "Your account has been created successfully.",
-      data: result,
+      data: {
+         userId:result.userId, 
+         displayId: result.displayId 
+      },
     });
   } catch (error) {
 
@@ -34,6 +39,7 @@ export const userRegister: RequestHandler = async (req, res, next) => {
       return;
     }
 
+    console.error("Unexpected user registration error:", error);
     res.status(500).json({message: "An unexpected error occurred. Please try again later."});
   }
 };

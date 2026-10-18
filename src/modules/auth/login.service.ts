@@ -13,6 +13,7 @@ export const loginUser = async (payload: LoginInput) => {
     where: { email: payload.email },
     select: {
       id: true,
+      displayId: true, 
       name: true,
       email: true,
       password: true,
@@ -53,6 +54,8 @@ export const loginUser = async (payload: LoginInput) => {
     
     const { rawToken, tokenHash } = generateRefreshToken();
 
+    console.log("tokenHash",tokenHash)
+
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7);
 
@@ -65,6 +68,7 @@ export const loginUser = async (payload: LoginInput) => {
       refreshToken: rawToken,
       user: {
         id: user.id,
+        displayId: user.displayId,
         name: user.name,
         email: user.email,
         role: user.role,
